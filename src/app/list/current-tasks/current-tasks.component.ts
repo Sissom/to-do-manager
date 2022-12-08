@@ -1,23 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Task } from '../task.model';
+import { TaskService } from '../task.service';
 
 @Component({
   selector: 'app-current-tasks',
   templateUrl: './current-tasks.component.html',
   styleUrls: ['./current-tasks.component.css']
 })
-export class CurrentTasksComponent implements OnInit {
+export class CurrentTasksComponent implements OnInit, OnDestroy {
+  currentTasksSub = new Subscription;
   tasks: Task[] = [
-    {"name": "blasdhf",
-    "description": "blah blah blah",
-    "materialsNeeded": ["don't know"],
-    "priority": "high"
-    },
-  ];
+];
 
-  constructor() { } // Inject taskService once it exists
+  constructor(private taskService: TaskService) { }
 
   ngOnInit(): void {
+    this.tasks = this.taskService.currentTasks;
+    this.currentTasksSub = this.taskService.currentTaskListChanged.subscribe(data => {
+      this.tasks = data;
+    });
+  }
+
+  onArchive(idx: number) {
+    this.taskService.archiveTask(idx);
+  }
+
+  onDelete(idx: number) {
+    this.taskService.deleteTask(idx, true);
+  }
+
+  ngOnDestroy(): void {
+      this.currentTasksSub.unsubscribe();
   }
 
 }

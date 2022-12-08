@@ -14,8 +14,8 @@
               </mat-card-content>
               <mat-card-actions>
                 <a mat-raised-button color="primary" routerLink="/current-tasks/{{i}}">View</a>
-                <button mat-raised-button color="accent">Archive</button><!-- Add function for moving to archived array -->
-                <button mat-raised-button color="warn">Delete</button><!-- Add function for deletion -->
+                <button mat-raised-button color="accent" (click)="onArchive(i)">Archive</button>
+                <button mat-raised-button color="warn" (click)="onDelete(i)">Delete</button>
               </mat-card-actions>
             </mat-card>
           </div>
