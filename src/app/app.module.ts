@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -21,7 +21,8 @@ import { HttpComponent } from './shared/http/http.component';
 import { AuthComponent } from './shared/auth/auth.component';
 import { VideoComponent } from './video/video.component';
 import { NavigationComponent } from './navigation/navigation.component';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { NavigationComponent } from './navigation/navigation.component';
     HttpComponent,
     AuthComponent,
     VideoComponent,
-    NavigationComponent
+    NavigationComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +48,11 @@ import { NavigationComponent } from './navigation/navigation.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatGridListModule
+    MatGridListModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

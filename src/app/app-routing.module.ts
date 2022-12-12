@@ -5,9 +5,10 @@ import { ArchivedTasksComponent } from './list/archived-tasks/archived-tasks.com
 import { CurrentTasksComponent } from './list/current-tasks/current-tasks.component';
 import { EditTaskComponent } from './list/edit-task/edit-task.component';
 import { ViewTaskComponent } from './list/view-task/view-task.component';
+import { AuthComponent } from './shared/auth/auth.component';
 
 const routes: Routes = [
-  { path: "", redirectTo: "/current-tasks", pathMatch: 'full'},
+  { path: "", redirectTo: "/auth", pathMatch: 'full'},
   { path: "current-tasks", component: CurrentTasksComponent, children:[
     { path: ":id", component: ViewTaskComponent, pathMatch: 'full' }
   ] },
@@ -16,6 +17,7 @@ const routes: Routes = [
   ]},
   { path: "add-task", component: AddTaskComponent },
   { path: "edit-task/:id", component: EditTaskComponent },
+  { path: 'auth', component: AuthComponent }
 
 ];
 
