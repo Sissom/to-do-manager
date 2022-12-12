@@ -50,14 +50,14 @@ export class TaskService {
   }
 
   // METHOD: sets archived tasks array to new array of tasks that we pass through (used in http service to fetch from firebase)
-  setArchivedTasks(tasks: Task[] | []) {
-    this.archivedTasks = tasks || []; // Sets archived tasks array to our new array of tasks OR to an empty array if we don't have any tasks
+  setArchivedTasks(tasks: Task[]) {
+    this.archivedTasks = tasks; // Sets archived tasks array to our new array of tasks
     this.archivedTaskListChanged.next(this.archivedTasks.slice()); // Notifies any subscribers that archivedTasks has changed
   }
 
   // METHOD: sets current tasks array to new array of tasks that we pass through (used in http service to fetch from firebase)
-  setCurrentTasks(tasks: Task[] | []) {
-    this.currentTasks = tasks || []; // Sets current tasks array to our new array of tasks OR to an empty array if we don't have any tasks
+  setCurrentTasks(tasks: Task[]) {
+    this.currentTasks = tasks; // Sets current tasks array to our new array of tasks
     this.currentTaskListChanged.next(this.currentTasks.slice()); // Notifies any subscribers that currentsTasks has changed
   }
 }
