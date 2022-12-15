@@ -14,7 +14,7 @@ import { MatSelectModule } from '@angular/material/select'
 import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AddTaskComponent } from './list/add-task/add-task.component';
@@ -23,8 +23,8 @@ import { ViewTaskComponent } from './list/view-task/view-task.component';
 import { ArchivedTasksComponent } from './list/archived-tasks/archived-tasks.component';
 import { CurrentTasksComponent } from './list/current-tasks/current-tasks.component';
 import { AuthComponent } from './shared/auth/auth.component';
-import { VideoComponent } from './video/video.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
 
 
 @NgModule({
@@ -36,7 +36,6 @@ import { NavigationComponent } from './navigation/navigation.component';
     ArchivedTasksComponent,
     CurrentTasksComponent,
     AuthComponent,
-    VideoComponent,
     NavigationComponent,
   ],
   imports: [
@@ -59,7 +58,13 @@ import { NavigationComponent } from './navigation/navigation.component';
     MatGridListModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

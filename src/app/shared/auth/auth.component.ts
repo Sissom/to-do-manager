@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { HTTPService } from '../http/http.service';
 import { AuthResponseData, AuthService } from './auth.service';
 
 @Component({
@@ -16,14 +15,14 @@ export class AuthComponent implements OnInit {
   reactiveAuthForm!: FormGroup;
   isLoginMode = true;
   authObsrv: Observable<AuthResponseData> | undefined;
-  errMsg: string | null = null;
+  errMsg = null;
 
-  constructor(private _formBuilder: FormBuilder, private authService: AuthService) {}
+  constructor(private _formBuilder: FormBuilder, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-
+    this.authService.automaticSignIn();
     this.reactiveAuthForm = this._formBuilder.group({
-      email: new FormControl ('', [Validators.required, Validators.email]),
+      email: new FormControl ('', [Validators.required]),
       password: new FormControl ('', [Validators.required])
     })
   }
@@ -34,27 +33,30 @@ export class AuthComponent implements OnInit {
 
   onSubmit() {
     if (!this.reactiveAuthForm.valid) return;
+
     const { email, password } = this.reactiveAuthForm.value;
 
     if (this.isLoginMode) {
       this.authObsrv = this.authService.signIn(email, password);
     } else {
       this.authObsrv = this.authService.signUp(email, password);
-      this.authObsrv.subscribe(
-        (res) => {
-          console.log('Response Successful:', res);
-        },
-        (err) => {
-          console.error('Error:', err);
-          this.errMsg = err.message;
-        }
-      );
-
     }
 
-    setTimeout(() => {
-      this.reactiveAuthForm.reset();
-    }, 5000);
+    this.authObsrv.subscribe(
+    //   error: (e) => this.errMsg = e,
+    //   complete: () => console.info('complete')
+    // }
+      (res) => {
+        console.log("Response Successful:", res);
+        if (this.errMsg) this.errMsg = null;
+        this.router.navigate(['current-tasks'])
+      },
+      (err) => {
+        console.error("Response Error:", err);
+        this.errMsg = err.message;
+      }
+  );
+    if (!this.errMsg) this.router.navigate(["current-tasks"]);
   }
 
   getErrorMessage() {

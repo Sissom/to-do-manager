@@ -10,14 +10,7 @@ export class TaskService {
   archivedTaskListChanged = new Subject<Task[]>();
   currentTaskListChanged = new Subject<Task[]>();
   taskSelected = new Subject<Task>();
-  currentTasks: Task[] = [
-    {
-      name: 'blasdhf',
-      description: 'blah blah blah',
-      materialsNeeded: "don't know",
-      priority: 'high',
-    },
-  ];
+  currentTasks: Task[] = [];
   archivedTasks: Task[] = [];
 
   constructor() {}

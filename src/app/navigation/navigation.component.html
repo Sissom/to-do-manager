@@ -9,15 +9,11 @@
   >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/current-tasks" routerLinkActive="active"
-        >Current Tasks</a
-      >
-      <a mat-list-item routerLink="archived-tasks" routerLinkActive="active"
-        >Archived Tasks</a
-      >
-      <a mat-list-item routerLink="/add-task" routerLinkActive="active"
-        >Create Task</a
-      >
+      <a mat-list-item routerLink="/auth" routerLinkActive="active" *ngIf="!isAuthenticated">Log In</a>
+      <a mat-list-item routerLink="/auth" routerLinkActive="active" (click)="onSignOut()" *ngIf="isAuthenticated">Sign Out</a>
+      <a mat-list-item routerLink="/current-tasks" routerLinkActive="active" *ngIf="isAuthenticated">Current Tasks</a>
+      <a mat-list-item routerLink="archived-tasks" routerLinkActive="active" *ngIf="isAuthenticated">Archived Tasks</a>
+      <a mat-list-item routerLink="/add-task" routerLinkActive="active" *ngIf="isAuthenticated">Create Task</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
