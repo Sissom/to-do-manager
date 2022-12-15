@@ -1,1 +1,19 @@
-<p>view-task works!</p>
+<div>
+    <div class="border border-primary rounded px-3 py-2">
+        <p class="h3 col-md-4">Task Name: </p>
+        <p>{{ selectedTask.name }}</p>
+        <div>
+            <p class="h6 col-md-4">Description: </p>
+            <p>{{ selectedTask.description }}</p>
+        </div>
+        <div>
+            <p class="h6 col-md-4">Materials Needed: </p>
+            <p>{{ selectedTask.materialsNeeded }}</p>
+        </div>
+        <div>
+            <p class="h6 col-md-4">Priority: </p>
+            <p>{{ selectedTask.priority }}</p>
+        </div>
+        <button mat-raised-button color="primary" routerLink="../edit/{{idx}}">Edit Task</button>
+    </div>
+</div>

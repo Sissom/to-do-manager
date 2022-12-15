@@ -1,1 +1,33 @@
-<p>edit-task works!</p>
+
+<form [formGroup]="editTaskForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+        <div class="d-flex flex-column">
+            <mat-form-field width="100%">
+                <mat-label>Task Name</mat-label>
+                <input matInput type="text" formControlName="name"/>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Materials Needed</mat-label>
+                <textarea type="text" matInput formControlName="materials"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Priority</mat-label>
+                <mat-select formControlName="priority" [(value)]="selectedTask.priority">
+                    <mat-option *ngFor="let priority of priorities" value="{{ priority }}">
+                        {{ priority }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-raised-button color='primary' type="submit">Submit</button>
+            <button mat-raised-button color="warn" type="button" (click)="onCancel()">Cancel</button>
+         </div>
+    </div>
+</form>
+

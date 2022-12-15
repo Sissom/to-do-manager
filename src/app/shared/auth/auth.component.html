@@ -1,19 +1,20 @@
-
-  <form [formGroup]="reactiveAuthForm">
-  <mat-form-field appearance="fill">
+ <form [formGroup]="reactiveAuthForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill" class="email">
     <mat-label>Enter your email</mat-label>
-    <input matInput placeholder="email@example.com" formControlName="email" required >
-    <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+    <input matInput placeholder="email@example.com" formControlName="email" required>
+    <mat-error *ngIf="this.reactiveAuthForm.invalid">{{getErrorMessage()}}</mat-error>
   </mat-form-field>
-  </form>
-
-  <form [formGroup]="reactiveAuthForm">
-  <mat-form-field appearance="fill">
+  <br>
+  <mat-form-field appearance="fill" class="password">
     <mat-label>Enter your password</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'">
+    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
   </mat-form-field>
+  <br>
+<button type="submit" mat-raised-button color="primary" class="login-btn">{{isLoginMode ? "Log In" : "Sign Up"}}</button>
+<button type="button" mat-raised-button color="primary" class="sign-btn" (click)="onSwitchMode()">Switch to {{ isLoginMode ? "Sign Up" : "Sign In"}}</button>
 </form>
+<hr>
 

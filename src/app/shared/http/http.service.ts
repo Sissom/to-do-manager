@@ -14,7 +14,7 @@ export class HTTPService {
 
   constructor(private http: HttpClient, private taskService: TaskService) {}
 
-  // METHOD - fetches archived tasks array from Firebase  (stopped here so I need to figure out this error)
+  // METHOD - fetches archived tasks array from Firebase
   fetchArchivedTasks() {
     return this.http
       .get<Task[]>(`${this.firebaseUserURL}archivedTasks.json`, {})
@@ -45,10 +45,10 @@ export class HTTPService {
   }
 
   // METHOD - saves both current and archived tasks arrays to Firebase
-  saveTasksToFirebase(archivedTasks: Task[], currentTasks: Task[]) {
+  saveTasksToFirebase() {
     const tasks = {
-      archivedTasks: archivedTasks,
-      currentTasks: currentTasks,
+      archivedTasks: this.taskService.getArchivedTasks(),
+      currentTasks: this.taskService.getCurrentTasks(),
     };
 
     this.http.patch(this.firebaseDatabaseURL, tasks).subscribe((res) => {

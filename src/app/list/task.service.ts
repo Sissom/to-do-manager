@@ -14,13 +14,18 @@ export class TaskService {
     {
       name: 'blasdhf',
       description: 'blah blah blah',
-      materialsNeeded: ["don't know"],
+      materialsNeeded: "don't know",
       priority: 'high',
     },
   ];
   archivedTasks: Task[] = [];
 
   constructor() {}
+
+  addTask(newTask: Task) { // Function to create new tasks from add-task form
+    this.currentTasks.push(newTask);
+    this.currentTaskListChanged.next(this.currentTasks.slice());
+  }
 
   archiveTask(idx: number) {
     this.archivedTasks.push(this.currentTasks[idx]); // Pushes currentTasks to archivedTasks array
@@ -37,6 +42,27 @@ export class TaskService {
     } else {
       this.archivedTasks.splice(idx, 1); // Remove from archivedTasks
       this.archivedTaskListChanged.next(this.archivedTasks.slice()); // Emits changes to archivedTasks
+    }
+  }
+
+  editTask(idx: number, isCurrent: boolean, edited: Task) {
+    if (isCurrent == true) {
+      this.currentTasks[idx] == edited;
+      this.currentTaskListChanged.next(this.currentTasks);
+    }
+    else {
+      this.archivedTasks[idx] = edited;
+      this.archivedTaskListChanged.next(this.archivedTasks);
+    }
+  }
+
+  getSelectedTask(idx: number, isCurrent: boolean) {
+    if (isCurrent == true) {
+      // If current array
+      this.taskSelected.next(this.currentTasks[idx]);
+      }
+    else {
+      this.taskSelected.next(this.archivedTasks[idx]);
     }
   }
 

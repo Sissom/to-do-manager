@@ -10,14 +10,15 @@ import { AuthComponent } from './shared/auth/auth.component';
 const routes: Routes = [
   { path: "", redirectTo: "/auth", pathMatch: 'full'},
   { path: "current-tasks", component: CurrentTasksComponent, children:[
-    { path: ":id", component: ViewTaskComponent, pathMatch: 'full' }
+    { path: ":id", component: ViewTaskComponent, pathMatch: 'full' },
+    { path: "edit/:id", component: EditTaskComponent, pathMatch: 'full'}
   ] },
   { path: "archived-tasks", component: ArchivedTasksComponent, children: [
-    { path: ":id", component: ViewTaskComponent, pathMatch: 'full' }
+    { path: ":id", component: ViewTaskComponent, pathMatch: 'full' },
+    { path: "edit/:id", component: EditTaskComponent, pathMatch: 'full'}
   ]},
-  { path: "add-task", component: AddTaskComponent },
-  { path: "edit-task/:id", component: EditTaskComponent },
-  { path: 'auth', component: AuthComponent }
+  { path: "add-task", component: AddTaskComponent, pathMatch: 'full' },
+  { path: 'auth', component: AuthComponent, pathMatch: 'full' }
 
 ];
 

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { HTTPService } from '../http/http.service';
+import { AuthResponseData } from './auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -10,6 +14,9 @@ export class AuthComponent implements OnInit {
 
   hide = true;
   reactiveAuthForm!: FormGroup;
+  isLoginMode = true;
+  authObsrv: Observable<AuthResponseData> | undefined;
+  formSubmitted = false;
 
   constructor(private _formBuilder: FormBuilder) {}
 
@@ -21,11 +28,27 @@ export class AuthComponent implements OnInit {
     })
   }
 
-getErrorMessage() {
-  if (this.reactiveAuthForm.hasError('required')) {
-    return 'Please enter a valid email address.';
+  onSwitchMode() {
+    this.isLoginMode = !this.isLoginMode
+    // console.log("Mode Switched")
   }
 
-  return this.reactiveAuthForm.hasError('email') ? 'Not a valid email' : '';
+  onSubmit() {
+    if (!this.reactiveAuthForm.valid) return;
+    this.formSubmitted = true;
+    // console.log(this.reactiveAuthForm.value)
+
+    setTimeout(() => {
+      this.reactiveAuthForm.reset();
+      this.formSubmitted = false;
+    }, 5000);
   }
+
+  getErrorMessage() {
+    if (this.reactiveAuthForm.hasError('required')) {
+      return 'Please enter a valid email address.';
+    }
+
+    return this.reactiveAuthForm.hasError('email') ? 'Not a valid email' : '';
+    }
 }
