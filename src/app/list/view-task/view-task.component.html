@@ -15,5 +15,14 @@
             <p>{{ selectedTask.priority }}</p>
         </div>
         <button mat-raised-button color="primary" routerLink="../edit/{{idx}}">Edit Task</button>
+        <button mat-raised-button color="secondary" (click)="displayVideos(selectedTask.name)">Find videos</button>
+    </div>
+    <div>
+        <div *ngIf="videoArray.length != 0">
+            <div *ngFor="let video of videoArray">
+                <a href="https://www.youtube.com/watch?v={{video.id.videoId}}" target="_blank">{{video.snippet.title}}</a><br>
+                <img src="{{video.snippet.thumbnails.default.url}}" >
+            </div>
+        </div>
     </div>
 </div>

@@ -1,3 +1,5 @@
+import { HttpClient } from '@angular/common/http';
+import { environment } from "src/environments/environment";
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VideoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }
+
+
 
 }
