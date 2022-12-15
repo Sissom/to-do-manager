@@ -17,4 +17,5 @@
 <button type="button" mat-raised-button color="primary" class="sign-btn" (click)="onSwitchMode()">Switch to {{ isLoginMode ? "Sign Up" : "Sign In"}}</button>
 </form>
 <hr>
+<p class="alert alert-danger mt-3" *ngIf="errMsg">{{ errMsg }}</p>
 

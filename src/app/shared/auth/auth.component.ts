@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angula
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { HTTPService } from '../http/http.service';
-import { AuthResponseData } from './auth.service';
+import { AuthResponseData, AuthService } from './auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -16,9 +16,9 @@ export class AuthComponent implements OnInit {
   reactiveAuthForm!: FormGroup;
   isLoginMode = true;
   authObsrv: Observable<AuthResponseData> | undefined;
-  formSubmitted = false;
+  errMsg: string | null = null;
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {
 
@@ -30,17 +30,30 @@ export class AuthComponent implements OnInit {
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode
-    // console.log("Mode Switched")
   }
 
   onSubmit() {
     if (!this.reactiveAuthForm.valid) return;
-    this.formSubmitted = true;
-    // console.log(this.reactiveAuthForm.value)
+    const { email, password } = this.reactiveAuthForm.value;
+
+    if (this.isLoginMode) {
+      this.authObsrv = this.authService.signIn(email, password);
+    } else {
+      this.authObsrv = this.authService.signUp(email, password);
+      this.authObsrv.subscribe(
+        (res) => {
+          console.log('Response Successful:', res);
+        },
+        (err) => {
+          console.error('Error:', err);
+          this.errMsg = err.message;
+        }
+      );
+
+    }
 
     setTimeout(() => {
       this.reactiveAuthForm.reset();
-      this.formSubmitted = false;
     }, 5000);
   }
 
